@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Dating</string>
+    <string name="title_nearby_list">NearBys</string>
+    <string name="title_nearby_detail">NearBy Detail</string>
+    <string name="title_activity_map_anzeige">Map</string>
+    <string name="title_activity_profileinstellungen">Profileinstellungen</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

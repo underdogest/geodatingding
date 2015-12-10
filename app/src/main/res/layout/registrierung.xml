@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrieren"
+        android:id="@+id/textView3"
+        android:textSize="40dp"
+        android:textColor="#757374"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/textName"
+        android:textSize="25dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/editTextName"
+        android:layout_alignBottom="@+id/textName"
+        android:layout_toRightOf="@+id/textName"
+        android:layout_toEndOf="@+id/textPasswort"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="20dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E-Mail:"
+        android:id="@+id/textView2"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textPasswortWdh"
+        android:layout_alignStart="@+id/textPasswortWdh"
+        android:textSize="25dp"
+        android:layout_below="@+id/textName"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTextEmail"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/editTextPasswortWdh"
+        android:layout_alignStart="@+id/editTextPasswortWdh"
+        android:layout_alignRight="@+id/editTextName"
+        android:layout_below="@+id/textName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Passwort"
+        android:id="@+id/textPasswort"
+        android:textSize="25dp"
+        android:layout_alignLeft="@+id/textName"
+        android:layout_alignStart="@+id/textName"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextPasswort"
+        android:layout_gravity="center_horizontal"
+        android:layout_toRightOf="@+id/textPasswort"
+        android:layout_toEndOf="@+id/textPasswort"
+        android:layout_alignBottom="@+id/textPasswort"
+        android:layout_alignLeft="@+id/editTextName"
+        android:layout_alignRight="@+id/editTextName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wdh."
+        android:id="@+id/textPasswortWdh"
+        android:textSize="25dp"
+        android:layout_alignLeft="@+id/textName"
+        android:layout_alignStart="@+id/textName"
+        android:layout_below="@+id/textPasswort"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextPasswortWdh"
+        android:layout_gravity="center_horizontal"
+        android:layout_toRightOf="@+id/textPasswort"
+        android:layout_toEndOf="@+id/textPasswort"
+        android:layout_alignBottom="@+id/textPasswortWdh"
+        android:layout_below="@+id/editTextPasswort"
+        android:layout_alignLeft="@+id/editTextPasswort"
+        android:layout_alignRight="@+id/editTextName" />
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrieren"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:textSize="20dp" />
+
+
+
+</RelativeLayout>
