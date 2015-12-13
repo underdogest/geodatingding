@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.example.maddy.dating.dummy.DummyContent;
+import com.example.maddy.dating.dummy.PeopleCache;
 
 import java.util.List;
 
@@ -72,12 +73,11 @@ public class NearByListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        List<NearByPeopleEntryShort> meineListe;
+        List<NearByPeopleEntryShort> meineListe = PeopleCache.getList();
         // TODO: replace with a real list adapter.
         setListAdapter(new NearByPeopleListAdapter<NearByPeopleEntryShort>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
                 meineListe));
     }
 
