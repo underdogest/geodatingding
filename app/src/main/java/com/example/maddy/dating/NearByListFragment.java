@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.example.maddy.dating.dummy.DummyContent;
-import com.example.maddy.dating.dummy.PeopleCache;
 
 import java.util.List;
 

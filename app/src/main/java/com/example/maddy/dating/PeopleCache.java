@@ -1,4 +1,4 @@
-package com.example.maddy.dating.dummy;
+package com.example.maddy.dating;
 
 import com.example.maddy.dating.NearByPeopleEntryShort;
 
