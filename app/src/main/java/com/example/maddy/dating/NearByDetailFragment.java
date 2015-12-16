@@ -1,20 +1,13 @@
 package com.example.maddy.dating;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 
 /**
@@ -75,7 +68,27 @@ public class NearByDetailFragment extends Fragment {
 			{
 				ImageView imageView = (ImageView) result.findViewById(R.id.imageView);
 				imageView.setImageBitmap(mItem.bitmap);
-				((TextView) result.findViewById(R.id.AnzeigeName)).setText(mItem.firstName + mItem.lastName);
+
+				TextView textName = ((TextView) result.findViewById(R.id.AnzeigeName));
+				if(textName != null)
+					textName.setText(mItem.firstName);
+
+				TextView textAlter = ((TextView) result.findViewById(R.id.AnzeigeAlter));
+				if(textAlter != null)
+					textAlter.setText(mItem.profileExtra.alter.toString());
+
+				TextView textGeschlecht = ((TextView) result.findViewById(R.id.AnzeigeGeschlecht));
+				if(textGeschlecht != null)
+					textGeschlecht.setText(mItem.profileExtra.getGenderString());
+
+				TextView textOrientierung = ((TextView) result.findViewById(R.id.AnzeigeOrientierung));
+				if(textOrientierung != null)
+					textOrientierung.setText(mItem.profileExtra.getLookingForString());
+
+				TextView textInteressen = ((TextView) result.findViewById(R.id.AnzeigeInteressen));
+				if(textInteressen != null)
+					textInteressen.setText(mItem.profileExtra.getInterestsString());
+
 			}
 		}
 		if (mItem != null)

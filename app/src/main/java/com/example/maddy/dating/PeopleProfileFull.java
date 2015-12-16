@@ -21,6 +21,8 @@ public class PeopleProfileFull
 	public Integer userID;
 	public Bitmap bitmap;
 
+	public PeopleProfileExtra profileExtra;
+
 	public int getTitle() {
 		return 0;
 	}
@@ -42,6 +44,7 @@ public class PeopleProfileFull
 		this.distance = profile.distance;
 		this.imageUrl = profile.imageUrl;
 		this.userID = profile.userID;
+		this.profileExtra = new PeopleProfileExtra(this.extraProfile);
 
 		try
 		{

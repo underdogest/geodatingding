@@ -159,12 +159,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>
 
 	private boolean isEmailValid(String email)
 	{
-		return email.contains("@");
+		return true;
 	}
 
 	private boolean isPasswordValid(String password)
 	{
-		return password.length() > 4;
+		return true;
 	}
 
 	/**
@@ -284,7 +284,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>
 			try
 			{
 				// Simulate network access.
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e)
 			{
 				return false;
