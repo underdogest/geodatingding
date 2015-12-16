@@ -1,8 +1,14 @@
 package com.example.maddy.dating;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 
 /**
@@ -21,14 +27,56 @@ import android.support.v4.app.FragmentActivity;
  * {@link NearByListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class NearByListActivity extends FragmentActivity
+public class NearByListActivity extends AppCompatActivity
         implements NearByListFragment.Callbacks {
 
+    private Menu optionsMenu;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.optionsMenu = menu;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_nearby, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void setRefreshActionButtonState(final boolean refreshing) {
+        if (optionsMenu != null) {
+            final MenuItem refreshItem = optionsMenu
+                    .findItem(R.id.nearby_menu_refresh);
+            if (refreshItem != null) {
+                if (refreshing) {
+                    refreshItem.setActionView(R.layout.actionbar_indeterminate_progress);
+                } else {
+                    refreshItem.setActionView(null);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nearby_menu_refresh:
+                setRefreshActionButtonState(true);
+                ((NearByListFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.nearby_list))
+                        .refreshList(new NearByListFragment.RefreshCallbacks(){
+                            @Override
+                            public void onRefreshComplete()
+                            {
+                                setRefreshActionButtonState(false);
+                            }
+                        });
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +96,6 @@ public class NearByListActivity extends FragmentActivity
                     .findFragmentById(R.id.nearby_list))
                     .setActivateOnItemClick(true);
         }
-
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     /**
@@ -57,13 +103,13 @@ public class NearByListActivity extends FragmentActivity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(Context ctx, Integer id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(NearByDetailFragment.ARG_ITEM_ID, id);
+            arguments.putInt(NearByDetailFragment.ARG_ITEM_ID, id);
             NearByDetailFragment fragment = new NearByDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

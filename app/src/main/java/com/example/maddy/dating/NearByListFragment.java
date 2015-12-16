@@ -1,14 +1,18 @@
 package com.example.maddy.dating;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.example.maddy.dating.dummy.DummyContent;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A list fragment representing a list of NearBys. This fragment
@@ -47,19 +51,28 @@ public class NearByListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
-    }
+        public void onItemSelected(Context ctx, Integer id);
 
+    }
+    public interface RefreshCallbacks
+    {
+        public void onRefreshComplete();
+    }
     /**
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(Context ctx, Integer id) {
             //starte hier activity zum anzeigen der profildaten
+            Intent upanel = new Intent(ctx, NearByDetailActivity.class);
+            upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            upanel.putExtra(NearByDetailFragment.ARG_ITEM_ID, id.toString());
+            ctx.startActivity(upanel);
         }
     };
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -68,16 +81,44 @@ public class NearByListFragment extends ListFragment {
     public NearByListFragment() {
     }
 
+    NearByPeopleListAdapter<NearByPeopleEntryShort> meinAdapter = null;
+
+    public void refreshList(final RefreshCallbacks refreshCallbacks)
+    {
+        class RefreshAsyncTask extends AsyncTask<Void, Void, List<NearByPeopleEntryShort>>
+        {
+            @Override
+            protected List<NearByPeopleEntryShort> doInBackground(Void... params)
+            {
+                return PeopleCache.getListFixedLocation(getContext());
+            }
+
+            @Override
+            protected void onPostExecute(List<NearByPeopleEntryShort> result)
+            {
+                meinAdapter.clear();
+                meinAdapter.addAll(result);
+                meinAdapter.notifyDataSetChanged();
+                refreshCallbacks.onRefreshComplete();
+            }
+        }
+        RefreshAsyncTask task = new RefreshAsyncTask();
+        task.execute();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        meinAdapter = new NearByPeopleListAdapter<NearByPeopleEntryShort>(getActivity(), new ArrayList<NearByPeopleEntryShort>());
+        setListAdapter(meinAdapter);
 
-        List<NearByPeopleEntryShort> meineListe = PeopleCache.getList();
-        // TODO: replace with a real list adapter.
-        setListAdapter(new NearByPeopleListAdapter<NearByPeopleEntryShort>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                meineListe));
+        refreshList(new RefreshCallbacks()
+        {
+            @Override
+            public void onRefreshComplete()
+            {
+            }
+        });
     }
 
     @Override
@@ -89,18 +130,6 @@ public class NearByListFragment extends ListFragment {
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // Activities containing this fragment must implement its callbacks.
-        if (!(activity instanceof Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (Callbacks) activity;
     }
 
     @Override
@@ -117,7 +146,8 @@ public class NearByListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+
+        mCallbacks.onItemSelected(getContext(), meinAdapter.getItem(position).userID);
     }
 
     @Override
@@ -150,4 +180,6 @@ public class NearByListFragment extends ListFragment {
 
         mActivatedPosition = position;
     }
+
+
 }
